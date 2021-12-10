@@ -16,29 +16,32 @@ public class MainThread extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
     }
-        public void run () {
-            while (running) {
-                canvas = null;
-                try {
-                    canvas = this.surfaceHolder.lockCanvas();
-                    synchronized (surfaceHolder) {
-                        this.gameView.update();
-                        this.gameView.draw(canvas);
-                    }
-                } catch (Exception e) {
-                } finally {
-                    if (canvas != null) {
-                        try {
-                            surfaceHolder.unlockCanvasAndPost(canvas);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+
+    public void run() {
+        while (running) {
+            canvas = null;
+            try {
+                canvas = this.surfaceHolder.lockCanvas();
+                synchronized (surfaceHolder) {
+                    this.gameView.update();
+                    this.gameView.draw(canvas);
+                }
+            } catch (Exception e) {
+            } finally {
+                if (canvas != null) {
+                    try {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
+    }
 
 
-    public void setRunning(boolean isRunning) {running = isRunning;}
+    public void setRunning(boolean isRunning) {
+        running = isRunning;
+    }
 }
 

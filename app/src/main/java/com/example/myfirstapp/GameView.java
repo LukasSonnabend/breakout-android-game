@@ -12,12 +12,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Ball ball;
     private BlockMatrix blockField;
     GameScreenActivity parentActivity;
-    private int Ballx;
-    private int Bally;
+    private int currentTouchX;
+    private int currentTouchY;
+    private String currentTouchEvent;
+    // Level
+    private Level currentLevel;
 
     public GameView(Context context) {
         super(context);
 
+        // display Metric test
         parentActivity = (GameScreenActivity) context;
         getHolder().addCallback(this);
 
@@ -33,25 +37,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        ball = new Ball();
-        blockField = new BlockMatrix(parentActivity);
+        currentLevel = new Level(parentActivity);
         thread.setRunning(true);
         thread.start();
     }
 
     public void update() {
-        ball.setXY(Ballx, Bally);
-        blockField.setBallPosition(Ballx, Bally);
-        // calc positions here
+        currentLevel.updateData(currentTouchX, currentTouchY, currentTouchEvent);
 
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (canvas!=null) {
-            ball.draw(canvas);
-            blockField.draw(canvas);
+        if (canvas != null) {
+            currentLevel.renderFrame(canvas);
         }
     }
 
@@ -71,16 +71,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        System.out.println("lub");
-        Ballx = (int)event.getX();
-        Bally = (int)event.getY();
+    public boolean onTouchEvent(MotionEvent event) {
+        currentTouchX = (int) event.getX();
+        currentTouchY = (int) event.getY();
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                currentTouchEvent = "DOWN";
+                break;
             case MotionEvent.ACTION_MOVE:
+                currentTouchEvent = "MOVE";
+                break;
             case MotionEvent.ACTION_UP:
+                currentTouchEvent = "UP";
+                break;
         }
         return true;
     }
