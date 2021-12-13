@@ -13,7 +13,7 @@ public class BallLauncher {
 
     //top left Corner is Origin (x,y)
     private Pair<Integer, Integer> origin;
-    private Integer width = 500;
+    private Integer width = 270;
     private Integer height = 15;
     private String fillColorString = "#CDFCFC";
 
@@ -24,16 +24,26 @@ public class BallLauncher {
     private Rect touchBox;
     private Level parent;
 
+    private Integer xPosition;
+
+    private Integer maxXCoord;
+
+
     //braucht für die Hitdetection eine "Touchbox"
 
 
     public BallLauncher(Pair<Integer, Integer> screenSize, Level parent) {
-        origin = new Pair<>(screenSize.first / 2 - width / 2, screenSize.second - 400);
+        xPosition = screenSize.first / 2 - width / 2;
+        origin = new Pair<>(xPosition, screenSize.second - 400);
         this.parent = parent;
+        maxXCoord = screenSize.first;
         touchBox = new Rect(origin.first, origin.second, origin.second + width, origin.second + 400);
     }
 
     public void draw(Canvas canvas) {
+        origin = new Pair<>(xPosition, origin.second);
+        touchBox = new Rect(origin.first, origin.second, origin.second + width, origin.second + 400);
+
         paint.setColor(Color.parseColor(fillColorString));
 
         if (currentTouchX.equals(-1) && currentTouchY.equals(-1)) {
@@ -66,16 +76,13 @@ public class BallLauncher {
     }
 
     //calc Hit with contains hits müssen nur gerechnet werden wenn block nicht von 4 blocks eingeschlossen ist
-    public void hitDetection(int x, int y, String currentTouchEvent, Ball gameBall) {
+    public void touchDetection(int x, int y, String currentTouchEvent, Ball gameBall) {
         // R = ball radius#
-        if (gameBall.getShotTaken())
-            return;
-
+        if (!gameBall.getShotTaken()) {
         int R = 30;
 
         int Xn = Math.max(touchBox.left, Math.min(x, touchBox.left + width));
         int Yn = Math.max(touchBox.top, Math.min(y, touchBox.bottom + height));
-
 
         int Dx = Xn - x;
         int Dy = Yn - y;
@@ -85,7 +92,6 @@ public class BallLauncher {
             currentTouchY = y;
             // erst schießen wenn released wird
             if (currentTouchEvent.equals("UP")) {
-
                 Pair<Double, Double> speedPair = calcAcceleration();
                 currentTouchY = -1;
                 currentTouchX = -1;
@@ -97,6 +103,10 @@ public class BallLauncher {
             fillColorString = "#CDFCFC";
             currentTouchX = -1;
             currentTouchY = -1;
+        }
+        } else {
+            movePaddle(x);
+
         }
     }
 
@@ -130,30 +140,112 @@ public class BallLauncher {
         Pair<Double, Double> vectRight = new Pair<Double, Double>((double) origin.first + width - currentTouchX, (double) origin.second - currentTouchY + 30);
         Pair<Double, Double> vectLeft = new Pair<Double, Double>((double) origin.first - currentTouchX, (double) origin.second - currentTouchY + 30);
 
-        double lenVectLeft = Math.sqrt(Math.pow(vectLeft.first, 2) + Math.pow(vectLeft.second, 2));
-        double lenVectRight = Math.sqrt(Math.pow(vectRight.first, 2) + Math.pow(vectRight.second, 2));
-        double ratioLengths = lenVectLeft / lenVectRight > 1 ? lenVectLeft / lenVectRight : lenVectRight / lenVectLeft;
-        double yRatio = ratioLengths > 1 ? ratioLengths : lenVectRight / lenVectLeft;
-
         PointF VectRightStart = new PointF(origin.first + width, origin.second);
         PointF VectRightEnd = new PointF(currentTouchX, currentTouchY + 30);
 
         PointF VectLeftStart = new PointF(origin.first, origin.second);
         PointF VectLeftEnd = new PointF(currentTouchX, currentTouchY);
-        double angleDegrees = bisectorAngleBetween2Lines(VectRightStart, VectRightEnd, VectLeftStart, VectLeftEnd);
 
-        double angleRadians = bisectorAngleBetween2Lines(VectRightStart, VectRightEnd, VectLeftStart, VectLeftEnd);
-        Integer multiplier = 10;
-        Integer direction = 1;
-        Double xComponent = Math.cos(Math.PI * angleRadians / 180) * multiplier;
+        double angleDegrees = bisectorAngleBetween2Lines(VectRightStart, VectRightEnd, VectLeftStart, VectLeftEnd);
+        Integer multiplier = 15;
+        Double xComponent = Math.cos(Math.PI * angleDegrees / 180) * multiplier;
         if (currentTouchX < origin.first)
             xComponent = Math.abs(xComponent);
 
-        return new Pair<>(xComponent, -Math.sin(Math.PI * angleRadians / 180) * multiplier);
+        return new Pair<>(xComponent, -Math.sin(Math.PI * angleDegrees / 180) * multiplier);
     }
 
     private Rect calcRect(Pair<Integer, Integer> origin, Integer w, Integer h) {
         return new Rect(origin.first, origin.second, origin.first + width, origin.second + height);
+    }
+
+
+    private void movePaddle(int x) {
+        int newPos = x -  width/2;
+        if (newPos < 0 )
+            newPos = 0;
+        else if ((newPos + width) > maxXCoord )
+            newPos = maxXCoord - width ;
+
+        xPosition = newPos;
+    }
+
+    public void hitDetection(Ball gameBall) {
+        if (!gameBall.hasFirstHit)
+            return;
+        // R = ball radius
+        int R = gameBall.getRadius();
+        // find nearest point of rectangle to circle
+        int Xn = (int) Math.max(origin.first, Math.min(gameBall.x, origin.first + width));
+        int Yn = (int)  Math.max(origin.second, Math.min(gameBall.y, origin.second + height));
+
+        int Dx = (int) (Xn - gameBall.x);
+        int Dy = (int) (Yn - gameBall.y);
+        if ((Dx * Dx + Dy * Dy) <= R * R) {
+            //if (gameBall.x > origin.first + width/4 && gameBall.x < (origin.first + width - (width/4)*3))
+            /*{
+                PointF VectLeftStart = new PointF(origin.first, origin.second);
+                PointF VectLeftEnd = new PointF(origin.first+width, origin.second);
+                // Ball Vector
+                Pair<Double, Double> calcedAccel = getJumpAngle(gameBall, VectLeftStart, VectLeftEnd);
+                gameBall.setAcceleration(-calcedAccel.first, Math.abs(calcedAccel.second));
+            }*/
+            if(gameBall.x < origin.first + width /4){
+                // einfallswinekl zwischen linkem Dreieck und Ball
+                //start unten am Paddle = x
+                // ende ist 50px nach rechts 10px hoch
+                PointF VectLeftStart = new PointF(origin.first, origin.second);
+                PointF VectLeftEnd = new PointF(origin.first+50, origin.second-50);
+                // Ball Vector
+                Pair<Double, Double> calcedAccel = getJumpAngle(gameBall, VectLeftStart, VectLeftEnd);
+                gameBall.setAcceleration(-calcedAccel.first, Math.abs(calcedAccel.second));
+            }
+            else if (gameBall.x > origin.first + width - width/4){
+                // einfallswinekl zwischen linkem Dreieck und Ball
+                //start unten am Paddle = x
+                // ende ist 50px nach rechts 10px hoch
+                // TODO: Der winkel ist vlt bissi spitz
+                PointF VectRightStart = new PointF(origin.first+width, origin.second);
+                PointF VectRightEnd = new PointF(origin.first+width-width/4, origin.second-50);
+                // Ball Vector
+                Pair<Double, Double> calcedAccel = getJumpAngle(gameBall, VectRightStart, VectRightEnd);
+                gameBall.setAcceleration(calcedAccel.first, Math.abs(calcedAccel.second));
+            } else {
+                PointF VectLeftStart = new PointF(origin.first, origin.second);
+                PointF VectLeftEnd = new PointF(origin.first + width, origin.second);
+                // Ball Vector
+                Pair<Double, Double> calcedAccel = getJumpAngle(gameBall, VectLeftStart, VectLeftEnd);
+                gameBall.setAcceleration(-calcedAccel.first, Math.abs(calcedAccel.second));
+            }
+
+
+
+
+        }
+    }
+    // Berechnung von Absprungwinkel an Paddle enden
+    private Pair<Double, Double> getJumpAngle(Ball gameBall, PointF vectLeftStart, PointF vectLeftEnd) {
+        PointF BallStart = new PointF((float) gameBall.x, (float) gameBall.y);
+        PointF BallMoveVect = new PointF((float) (gameBall.x + gameBall.accelerationX), (float) (gameBall.y + gameBall.accelerationY));
+        double angleDegrees = angleBetween2Lines(vectLeftStart, vectLeftEnd, BallStart, BallMoveVect);
+
+        Integer multiplier = 15;
+        Double xComponent = Math.cos(Math.PI * angleDegrees / 180) * multiplier;
+        if (currentTouchX < origin.first)
+            xComponent = Math.abs(xComponent);
+
+        return new Pair<>(xComponent, -Math.sin(Math.PI * angleDegrees / 180) * multiplier);
+    }
+
+    private float angleBetween2Lines(PointF A1, PointF A2, PointF B1, PointF B2) {
+
+        float angle1 = (float) Math.atan2(A2.y - A1.y, A1.x - A2.x);
+        float angle2 = (float) Math.atan2(B2.y - B1.y, B1.x - B2.x);
+        float calculatedAngle = (float) Math.toDegrees(angle1 + angle2);
+        if (calculatedAngle < 0) {
+            calculatedAngle += 360;
+        }
+        return calculatedAngle;
     }
 
 }

@@ -1,0 +1,557 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[ngerman]{babel}
+\usepackage{fancyhdr}
+\usepackage{makecell}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+\title{Projekt: Break Out}
+\date{}
+\maketitle
+\thispagestyle{empty}
+\begin{center}
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[h]{l l}
+
+Edi Karaasenov & 770245\\
+Erik Riemenschneider & 768660\\
+Lukas Sonnabend & 769087\\
+
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\vspace*{\fill}
+Professor: Prof. Dr. Benjamin Meyer\\
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+\section{Projektvorstellung}
+Im Rahmen der Veranstaltung Nutzerzentrierte Softwareentwicklung wird der Retro-Klassiker Break-Out entwickelt. Break-Out ist ein Spiel, welches in den späten 1980er Jahren für den Computer erschien.\newline\newline
+Das Spielprinzip ist recht einfach. Der Spieler versucht mithilfe eines Balls und eines Schlägers eine Wand aus Steinen zu zerstören.\\
+Der Schläger kann sich nur waagerecht bewegen und nicht senkrecht.
+Dabei versucht der Spieler immer den Ball so zutreffen um möglichst viele Steine zu treffen. Die Steine haben eine unterschiedlich Anzahl von Leben. Ein Stein Verliert ein Leben, wenn der Ball diesen trifft. Zerstört der Ball einen Stein, so kann es vorkommen das aus diesem ein Item fallen kann, welches Boni oder Mali für den Spieler bringt. Items wären in diesem Falle zum Beispiel ein extra Leben, mehr Bälle, stärkere Bälle oder eine umgekehrte Steuerung für den Spieler.\newline\newline
+Das Spielziel ist es so viele Steine wie möglich zu zerstören, bevor der Spieler keine Leben mehr hat. Der Spieler kann nur Leben verlieren indem der Ball unten aus dem Bildschirmrand herausfällt, die Seitenränder sowie der Obererand sind unsichtbare Wände und dienen als Bande.  
+\newpage
+
+\section{Skizze}
+
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[scale=0.5]{screen_Start.png}
+\caption{Haupmenü}
+\label{fig:Haupmenü}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[scale=0.5]{screen_Level.png}
+\caption{Level}
+\label{fig:Level}
+\end{minipage}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[scale=0.5]{screen_roundEnd.png}
+\caption{Highscores}
+\label{fig:Highscores}    
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[scale=0.5]{screen_Credits.png}
+\caption{Credits}
+\label{fig:Credits}
+\end{minipage}
+\end{figure}
+
+\newpage
+\section{Kriterienliste}
+\textbf{Unwichtige Kriterien:}
+\begin{itemize}
+    \item Alter
+    \item Beruf
+    \item Familienstand
+    \item Hobbies
+\end{itemize}
+
+\par\bigskip
+\begin{flushleft}
+\textbf{Wichtige Kriterien:}
+\end{flushleft}
+\begin{itemize}
+    \item Sehvermögen
+    \item Handy Bedienung
+    \item Präferierte Steuerung
+    \item Vorerfahrung mit anderen (digitalen) Spielen
+    \item Reaktionsgeschwindigkeit
+    \item Session Duration
+    \item Nutzungskontext (Mobil/Stationär)
+    \item Häufigkeit der Handynutzung
+    \item Affinität zu (Computer-)Spielen
+    \item Präferiertes Genre
+    \item Geringe Komplexität im Gameplay
+    \item Klare Aufgabenstellung
+    \item Elemente nicht zu klein darstellen
+\end{itemize}
+
+\newpage
+\section{Benutzerliste}
+
+\begin{table}[H]
+\begin{tabular}[h]{|l l|}
+\hline
+\textbf{Name:} & Harry Sonnabend\\
+\textbf{Alter:} & 63\\
+\textbf{Geboren:} & Essen\\
+\textbf{Job:} & Rentner\\
+\textbf{Familienstand:} & verheiratet\\
+\textbf{Kinder:} & 2\\
+\textbf{Sehvermögen} & Kurzsichtig\\
+\textbf{Handy Bedienung:} & Gut\\
+\textbf{Handy Nutzung:} & jeden Tag\\
+\textbf{Erfahrungen:} & Commander Keen\\
+\textbf{Genre:} & Quizspiel\\
+\textbf{Hobbys:} & Kochen\\
+\textbf{Nutzungskontext:} & Stationär(Couch)\\
+\textbf{Steuerung:} & per Hand\\
+\textbf{Affinität zu Spielen:} & hoch\\
+\textbf{Session Duration:} & beliebig\\
+\hline
+\end{tabular}
+\end{table}
+
+\par\bigskip
+
+\begin{table}[H]
+\begin{tabular}[h]{|l l|}
+\hline
+\textbf{Name:} & Gabi Feistel\\
+\textbf{Alter:} & 60\\
+\textbf{Geboren:} & Frankfurt am Main\\
+\textbf{Job:} & Bibliothekarin\\
+\textbf{Familienstand:} & verheiratet\\
+\textbf{Kinder:} & 2\\
+\textbf{Sehvermögen} & Gut\\
+\textbf{Handy Bedienung:} & Whatsapp/Telefonieren\\
+\textbf{Handy Nutzung:} & jeden Tag\\
+\textbf{Erfahrungen:} & Super Mario\\
+\textbf{Genre:} & Match Three Games\\
+\textbf{Hobbys:} & Lesen\\
+\textbf{Nutzungskontext:} & Mobil(Couch)\\
+\textbf{Steuerung:} & per Hand\\
+\textbf{Affinität zu Spielen:} & niedrig\\
+\textbf{Session Duration:} & beliebig\\
+\hline
+\end{tabular}
+\end{table}
+
+\par\bigskip
+
+\begin{table}[H]
+\begin{tabular}[h]{|l l|}
+\hline
+\textbf{Name:} & Michael Hunter\\
+\textbf{Alter:} & 55\\
+\textbf{Geboren:} & Griesheim\\
+\textbf{Job:} & Ehe. Prof. im Fach Software Engineering\\
+\textbf{Familienstand:} & verheiratet\\
+\textbf{Kinder:} & 1\\
+\textbf{Sehvermögen} & Weitsichtig\\
+\textbf{Handy Bedienung:} & sehr gut\\
+\textbf{Handy Nutzung:} & jeden Tag\\
+\textbf{Erfahrungen:} & Super Mario\\
+\textbf{Genre:} & weniger aktion eher beruhigend\\
+\textbf{Hobbys:} & Gartenpflege\\
+\textbf{Nutzungskontext:} & Mobil(Couch)\\
+\textbf{Steuerung:} & per Hand\\
+\textbf{Affinität zu Spielen:} & Hoch\\
+\textbf{Session Duration:} & beliebig\\
+\hline
+\end{tabular}
+\end{table}
+
+\newpage
+\section{Stereotypbeschreibung}
+\begin{flushleft}
+\textbf{Beschreibung: Herbert Meier}\newline
+Herbert wohnt in Langen zusammen mit seiner Frau mit der er seit 30 Jahren verheiratet ist.\newline
+
+Bedingt durch seinen Job ist Herbert über neue technische (Weiter-)Entwicklungen stehts Informiert. Er benutzt,\\ lieber seinen PC für das Surfen im Internet, da im der Text auf seinem Smartphone oft zu klein und dadurch schwer zu lesen ist.\newline
+
+Seitdem seine beiden Kinder von Zuhause ausgezogen sind, hat Herbert viel Zeit. In Corona arbeitet er meistens in Home Office. Er hat ausserdem die komplette Wohnung renoviert, da er Handwerklich begabt ist und das nötige Fingerspitzengefühl aufweist. Früher hatte er einen C64 auf dem er auch mal Spiele gespielt.\newline
+
+Seitdem er nun mehr Freizeit hat ist er dazu übergegangen verschiedene Spiele auf seinem Smartphone zu spielen.\newline 
+
+Obwohl Herbert jeden Tag am Keyboard sitzt, hat er sich bis heute nicht an die Bedienung eines Smartphones mit Touchscreen gewöhnt.
+
+\par\bigskip
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[h]{|l l|}
+\hline
+\textbf{Name:} & Herbert Meier\\
+\textbf{Alter:} & 53\\
+\textbf{Beruf:} & SysAdmin, Fachinformatiker\\
+\textbf{Familienstand:} & verheiratet\\
+\textbf{Kinder:} & 2\\
+\textbf{Hobbys:} & \makecell[l]{ Gartenpflege,\\ Stammbaumforschung\\}\\
+\textbf{Handy Bedienung:} & Okay\\
+\textbf{Computererfahrung:} & Sehr Gut\\
+\textbf{Computertyp:} & \makecell[l]{Desktop PC,\\ großer Bildschrim}\\
+\textbf{Internet:} & \makecell[l]{zuhause Breitband,\\ mobile 1GB Datenvolumen\\}\\
+\textbf{Sinuslevel:} & Konservativ-Etabliert\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\newpage
+\textbf{Beschreibung: Daniela Schmidt}\newline
+Daniela ist immer viel unterwegs, sie trifft sich oft mit ihren Freundinnen oder macht Shopping Ausflüge mit ihrer Tochter.\newline
+
+Für das Überbrücken von Wartezeiten wenn mal wieder eine Ihren Freundinnen zu spät kommt, oder wenn Sie zuhause alles erledigt hat und im TV mal wieder nichts gescheites läuft, mach Sie Kreuzworträtsel/Sudokus.\newline
+
+Für Computerspiele hatte Daniele früher nie Zeit, seitdem Sie nun vermehrt die Abende zuhause verbringt sehnt sie sich nach etwas Abwechslung.\newline
+
+In der Bedienung ihres Smartphones ist Daniela eher gemütlich unterwegs, wenn sie nicht weiß welchen Button sie drücken muss, oder mal wieder eine Einstellung sucht, fragt Sie ihre Tochter.\newline
+
+\par\bigskip
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[h]{|l l|}
+\hline
+\textbf{Name:} & Daniela Schmidt\\
+\textbf{Alter:} & 50\\
+\textbf{Beruf:} & Buchhalterin\\
+\textbf{Familienstand:} & verheiratet\\
+\textbf{Kinder:} & 1\\
+\textbf{Hobbys:} & \makecell[l]{ Kreuzworträtsel,\\ Sudoku\\}\\
+\textbf{Handy Bedienung:} & unsicher\\\
+\textbf{Sinuslevel:} & Bürgerliche Mitte\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\end{flushleft}
+
+\newpage
+\section{Fragenkatalog}
+\begin{itemize}
+    \item Wo benutzt du/spielst du mit/auf deinem Handy?
+    \item Wie oft spielst du?
+    \item Wie würdest du selbst deine Handybedienung bewerten? (Geschwindigkeit/Geschicklichkeit)
+    \begin{itemize}
+        \item Ich brauche oft Hilfe?
+    \end{itemize}
+    \item Gibt es positive Erlebnisse die du mit Mobile Gaming verbindest?
+    \begin{itemize}
+        \item Wenn ja bitte erläutern
+    \end{itemize}
+    \item Wie lange spielst du schon Mobile Games am Smartphone/Handy
+    \item In welcher Situation hast du das letzte Mal am Handy gespielt?
+    \item Welche Kriterien beeinflussen deine Entscheidung z.B. ein neues Spiel auszuprobieren
+    \item Gibt es K.O. Kriterien welche eine App/Spiel sofort uninteressant machen?
+    \item Welche Gefühle löst dein Lieblingsspiel aus?
+    \item Wie stehst du zu In-App käufen/Zeitlimits etc.
+    \item Physische Einschränkungen (Osteoporose in der Hand/Daumen)
+    \item Fragen nach Ideen/Fragen/Anregung
+\end{itemize}
+
+\newpage
+\section{Interview und Protokoll}
+\begin{flushleft}
+F: Wie oft spielst du auf deinem Handy?\\
+A: 2-3 Mal am Tag\newline
+
+F: Wie lange spielst du durchschnittlich am Stück?\\
+A: 15-20 Minuten\newline
+
+F: Wie sicher fühlst du dich bei der Bedienung deines Handys?\\
+A: Nicht sehr sicher, in hektischen Situationen fällt es mir schwer präzise Eingaben zu tätigen.\newline
+
+F: Wie sieht es aus bei unpräzisen Eingaben?\\
+A: Wenn keine hohe Präzision benötigt wird, kann ich mein Handy/Spiel auch schneller bedienen.\newline
+
+F: Brauchst du oft Hilfe bei der Bedienung deines Handys oder Spielen auf deinem Handy?\\
+A: Nein, da ich nur ein Spiel spielen (Candy Crush) habe ich die Bedienung schnell angeignet.\newline
+
+F: Wie hast du dein Spiel gelernt?\\
+A: Das Spiel ist an sich einfach zu verstehen. Gewisse Aspekte des Spiels wurde auch mittels kurzen Demonstrationen und ggf. mit zusätzlichen Textpassagen erläutert.\newline
+
+F: Also würdest du sagen ein eingebautes Tutorial hilft dir beim erlernen eines Spiels und du nimmst diese auch wahr? Welche Art des Tutorials präferierst du?\\
+A: Ja, hier muss ich aber sagen dass kurze anschauliche Sequenzen mit wenig Text mir besser gefallen, als längere Texte, diese überspringe ich meistens.\newline
+
+F: Gibts positive Erlebnisse die du mit Mobile Gaming verbindest?\\
+A: Das Spielen nutze ich als Zeitvertreib, wenn ich hiermit eine Wartezeit mit Spannung und Spaß überbrücken kann, freue ich mich dass ich nicht das Gefühl habe meine Zeit komplett verschwendet zu haben.\newline
+
+F: Für dich muss ein Spiel also spannend sein bzw. für aufregeung sorgen? Sollte ein Spiel also deiner Meinung nach einen Countdown oder sonstige Zeitbeschränkung zusätzlich zum Schwierigkeitsgrad haben?\\
+A: Eher im Gegenteil, ich spiele auch zur Entspannung. Während einer Runde Candy Crush denke ich eher über meinen nächsten Zug nach. Die Spannung kommt für mich daher dass ich eine bessere Punktzahl als andere Spieler erreichen möchte.\newline
+
+F: Was war die letzte Situation in der du an deinem Handy gespielt hast?\\
+A: Heute Nachmittag\newline
+
+F: Warum spielst du in dieser Situation?\\
+A: Ich denke das ich mich 10 Minuten hinsetzen könnte und einfach dann das Candy Crush spiele. Ich möchte dann das nächste Level erreichen, es geht mir schon darum zu gewinnen.\newline
+
+F: Also geht es dir darum eine gute Leistung zu erziehlen?\\
+A: Ja es spornt mich sehr an besser als meine Mitspieler zu sein, auch wenn ich nicht direkt gegen sie Spiele. Wenn man sonst unter den besten 3 ist und dann plötzlich unter den schlechtesten 10 landet ist es schon ein ansporn wieder mehr zu spielen um wieder besser zu werden.\newline
+
+F: Was gefällt dir an deinem Lieblingsspiel (Cand Crush) am besten?\\
+A: Dass man immer wieder das Spiel pausieren kann, aber es trotzdem einen “Konkurrenzkampf” mit den anderen Spielern gibt.\newline
+
+F: Gibt es irgendwelche Probleme mit dem Spiel (Candy Crush)\\
+A: Die wollen mich immer wieder abzocken, aber ich werde nicht für das Spiel bezahlen. Die “Zwangspausen” sehe ich als gut an, sie zwingen mich meine Spielzeit einzugrenzen, ich habe schließlich noch viele andere Sachen zu tun. Es gibt die Möglichkeit sich Hilfen (mehr Züge etc.) zu kaufen. Ich möchte aber lieber aus “eigener Kraft” die verschiedenen Level schaffen.\newline
+
+F: Also findest du gut dass dich das Spiel nicht zum ununterbrochen spielen animiert?\\
+A: Ja.\newline
+
+F: Welche Kriterien unabhänigig von deinem aktuell präferierten Spiel würden dich davon überzeugen dass ein Spiel gut ist?\\
+A: Auf jeden Fall nicht sowas wie Mario Kart wo ich immer so springen muss [sic]. Eher solche Sachen wie Candy Crush die eher strategischer Natur sind.\newline
+
+F: Warum ist dir wichtig dass das Spiel eine strategische Natur hat?\\
+A: Weil ich in diesen Jump-Spielen sehr schlecht bin. Darüberhinaus machen diese mir auch gar kein Spaß.\newline
+
+F: Dann gibt es anscheinend K.O. Kriterien für dich, welche ein Spiel sofort uninteressant machen?\\
+A: Ja, alles mit Gewalt zu tun hat. Spiele mit festen Rundenzeiten bei denen ich weiß, oh jetzt muss ich eine Stunde dran bleiben. Teamspiele bei denen andere Spieler auf einen Warten dass man jetzt zum spielen kommt. Das kenne ich von anderen Leuten, die treffen sich Abends um neuen und spielen 2 Stunden.\newline
+
+F: Verstehe ich richtig, dass es wichtig für dich ist dass du die Spiele alleine spielen kannst zu deinen eigenen Zeiten?\\
+A: Ja.\newline
+
+F: Welches Gefühl gibt dir das abschließen eines Levels? Wird dir dann etwas angezeigt?\\
+A: Ja durch den Stufenvergleich mit anderen Spielern eines ähnlichen Levels kann ich meine Leistung gut einordnen, dann bekommt man auch, wenn man unter den besten 5 ist solche Blöcke und damit kann man dann etwas kaufen, z.B. ein Ice-Teil, welches normalerweiße mit echtem Geld zu bezahlen ist.\newline
+
+F: Ist das dann ein Gegenstand der dir Vorteile in den nächsten Leveln bringt?\\
+A: Ja auch.\newline
+
+F: Also würdest du grundsätzlich sagen das solche Gegenstände (Powerups) eine interessante Sache sind?\\
+A: Ja, solange ich sie nicht bezahlen muss und diese auch durch eine gute Leistung erhalten kann. Die verschiedenen Gegenstände bringen oftmals Vorteile die ich gerne wahrnehme wenn ich mit einem Level Probleme habe. Außerdem bringen diese speziellen Fähigkeiten Abwechselung ins Spielgeschehen.\newline
+
+F:  Wenn du längere Zeit, in jeglicher Form, das Handy bedienst würde das bei dir zu Schmerzen oder ähnlichem führen?\\
+A: Wenn ich sehr lange das Handy in der Hand habe verkrampfen meine Hände manchmal.\newline
+
+F: Ok machen wir es konkreter, wie sieht es aus wenn du beispielsweise die ganze Zeit mit dem Daumen hin und her wischen müsstest?\\
+A: Das würde ich dann tatsächlich unangenehm finden.\newline
+
+F: Was denkst du über Kippsteuerung?\\
+A: Körperlich habe ich dabei keine Einschränkung, ich finde aber eine Kippsteuerung schwierig zu bedienen, das ich hiermit auch keine Übung habe und so oft zu extreme Eingaben mache.\newline
+
+F: Kommen wir zu visuellen Signalen, benutzt du eine (Lese)-Brille wenn du dein Handy benutzt?\\
+A: Ja ich trage eine Lesebrille, da auf dem Handy generell die Inhalte zu klein für mich sind um sie scharf sehen zu können.\newline
+
+F: Würdest du es präferieren wenn die Elemente größer sind sodass du ggf. Ohne Brille eine App bedienen kannst.\\
+A: Nein, da ich mit der Brille die Elemente in der normalen größe sehen kann gibt es für mich keinen Grund die Elemente größer zu machen. Ich denke dass bei meinem Spiel (Candy Crush) durch größere Elemente die Levels deutlich an komplexität verlieren würden und deshalb uninteressanter wären. Darüber hinaus möchte nicht “rumscrollen” müssen um das gesamte Spielfeld zu sehen.\newline
+
+F: Hast du noch weitere Anregungen oder Fragen?\\
+A: Bei Candy Crush könnten sie mal die Musik ändern, die geht mir auf die Nerven. Deshalb spiele ich eigentlich immer ohne Ton.\newline
+
+F: Heißt das du spielst komplett ohne Ton also auch ohne Soundeffekte?\\
+A: Ja das brauche ich auch nicht unbedingt, oft läuft auch der TV. Dann kann ich bei Bares für Rares zuhören und gleichzeitig Levels lösen.\newline
+
+F: Also wäre es für dich persönlich besser wenn wichtige Spielereignisse gänzlich über visuelle Merkmale kommuiziert werden?\\
+A: Ja.\newline
+
+\end{flushleft}
+\newpage
+
+\section{Anwendungsszenario}
+\begin{flushleft}
+Herbert programmierte schon den ganzen Tag. Er arbeitete zusammen mit seinen Kollegen im Home Office. Hier hat er sich angewöhnt länger zu schlafen und dafür bis spät abends zu arbeiten.
+\newline\newline
+Mittlerweile ist es schon 22 Uhr abends und er arbeitet noch an seinem Projekt. Er möchte gerne eine Pause machen und sich erholen, hierfür greift er sich sein Smartphone und öffnet eine Spielapp. Was ihm besonders gut an seinem Spiel gefällt, ist dass er mitten in einer Runde eine Pause einlegen kann und beim nächsten Start nahtlos an seine letzte Session anknüpfen kann.  
+\newline\newline
+Herbert hat das Spiel sogut gefallen, dass er es seinen Kollegen weiter empfohlen hat. Viele seiner Kollegen haben daraufhin angefangen, auch zu spielen, dies motiviert Herbert dazu möglichst hohe Scores zu erreichen. Sie tauschen sich nämlich jeden Tag über ihr beste Scores aus und schauen ständig in der Scoretabelle. 
+\newline\newline
+Außerdem ist Herbert sehr wichtig, dass er nicht in einem direkten Konkurrenzkampf mit seinen Kollegen steht. Er kann sein Versuch immer wiederholen und am Ende zählt nur sein bestes Ergebnis.
+\newline\newline
+Da es schon 22 Uhr abends ist, ist Herbert sehr wichtig, das Spiel lautlos spielen zu können. Seine Frau ist nämlich schon im Bett und er möchte sie nicht stören. 
+\end{flushleft}
+
+\newpage
+
+\section{Ausarbeitung des Anwendungsszenarios}
+\begin{flushleft}
+\begin{itemize}
+\item\textbf{Funktionale Anforderung}
+\newline
+f1: Das Spiel soll unterbrechbar/nahtlos fortsetzbar sein
+\newline\newline
+\item\textbf{Qualitative Anforderung}
+\newline
+q1 : ohne Ton spielbar / Musik nicht lästig
+\newline
+q2: erbrachte Leistungen sind vergleichbar (zB. innerhalb eines Levels)
+\newline\newline
+\item\textbf{Quantifizierung/Transformation der qualitativen Anforderungen}
+\newline
+Quantifizierung q1:  Die Spielbarkeit wird durch den Ton nicht beeinflusst
+\newline
+Transformation q2: Es ist möglich seine Highscores einzusehen, die scores werden durch eine Formel berechnet.
+\newline\newline
+\item\textbf{Begeisterungsfaktor}
+\newline
+b1: Wettkampforientiert (aber nicht in real-time)(Scoreboard)
+\newline\newline
+\end{itemize}
+\end{flushleft}
+
+\newpage
+\section{Navigationsübersicht}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{NavOverview.png}
+\end{figure}
+
+\newpage
+\section{UI Entwurf}
+\textbf{Startmenü:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{Startmenü.png}
+\caption{links: Erster Start, rechts: n-ter Start}
+\end{figure}
+\paragraph{Designentscheidungen}\newline
+Das Menü soll so schlank wie Möglich gehalten werden, damit der User nicht überwältigt wird. Es gibt 3 Kernfunktionalitäten, diese sind in absteigender Wichtigkeit eingeordnet. 1. Das Spielen bzw. der Spielstart, 2. Der globale Highscore und 3. die Anleitung.\\\\ Da es für das Spiel selber keine Konfigurationsmöglichkeiten bezüglich Schwierigkeit o.ä. geben wird, haben wir uns gegen einen Menüpunkt für Einstellungen im Hauptmenü entschieden. Die einzige Einstellung Mute/Unmute wird unterhalb des Start Screens angezeigt.\\\\
+\newpage
+\textbf{Levelübersich:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{LevelOverview.png}
+\caption{Levelübersicht}
+\end{figure}
+\paragraph{Designentscheidungen}\newline
+Das Menü soll so schlank wie Möglich gehalten werden, damit der User nicht überwältigt wird. Es gibt 3 Kernfunktionalitäten, diese sind in absteigender Wichtigkeit eingeordnet. 1. Das Spielen bzw. der Spielstart, 2. Der globale Highscore und 3. die Anleitung.\\\\ Da es für das Spiel selber keine Konfigurationsmöglichkeiten bezüglich Schwierigkeit o.ä. geben wird, haben wir uns gegen einen Menüpunkt für Einstellungen im Hauptmenü entschieden. Die einzige Einstellung Mute/Unmute wird unterhalb des Start Screens angezeigt.\\\\
+\newpage
+\textbf{Level:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Level.png}
+\caption{links: Level, recht: Pause}
+\end{figure}
+\par\bigskip
+\textbf{Highscore:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Endround screen.png}
+\caption{Highscore des Aktuellen Levels}
+\end{figure}
+
+\newpage
+\textbf{Globaler Highscore:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Global Highscores.png}
+\caption{Global Highscore}
+\end{figure}
+\par\bigskip
+\textbf{Anleitung:}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Tutorial.png}
+\caption{Anleitung}
+\end{figure}
+
+\newpage
+\section{Analyseklassen}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{Analyseklasse.png}
+\end{figure}
+
+\newpage
+\section{Testfälle}
+\textbf{Testfall 1: Neues Spiel Starten}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{Fall1.png}
+\end{figure}
+\textbf{Protokoll:}
+\par\bigskip
+Die Testperson hat sofort den neues Spiel Menüpunkt identifiziert und verstanden, dass dieser ein neues Spiel startet. 
+
+\newpage
+\textbf{Testfall 2: Level 4 Starten}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{Fall2.png}
+\end{figure}
+\textbf{Protokoll:}
+\par\bigskip
+Die Testperson hat zuerst den ("falschen") "weiterspielen" Menüpunkt gewählt. In der Levelübersicht hat die Testperson richtigerweise angenommen, dass das Level 4 Icon das 4. Level startet.
+
+\newpage
+\textbf{Testfall 3: Highscore anderer Spieler einsehen}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{Fall3.png}
+\end{figure}
+\textbf{Protokoll:}
+\par\bigskip
+Vom Hauptmenü aus hat die Person in kurzer Zeit den Menüpunkt High Scores korrekt identifiziert, um sich das Leaderboard anschauen zu können.
+
+\newpage
+\textbf{Testfall 4: Ein Spiel unterbrechen/abbrechen}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{test4.png}
+\end{figure}
+\textbf{Protokoll:}
+\par\bigskip
+Die Testperson hat schnell das Pause-Icon erkannt und dieses auch direkt als Menü Button verstanden. Im Pausemenü haben die klar beschriebenen Buttons es einfach gemacht, das laufende Level zu verlassen.
+\par\bigskip
+Darüber hinaus wurde es als positiv angesehen, dass sich der Button, wenn das Spiel pausiert ist, in einen Play Button verändert und somit klar ist, wie das Spiel wieder gestartet wird, auch wenn man die Menüpunkte nicht liest.
+
+\newpage
+\textbf{Testfall 5: Ein Level wiederholen}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{fall5.png}
+\end{figure}
+\textbf{Protokoll:}\newline
+Die Testperson wusste nicht welcher Menüpunkt gewählt werden soll und wollte in der Anleitung nachlesen wie man ein Level wiederholt.
+
+\newpage
+\textbf{Testfall 6: Anleitung ansehen}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Fall6.png}
+\end{figure}
+\textbf{Protokoll:}
+\par\bigskip
+Das finden der Anleitung hat wieder besser funktioniert, da an diesem Punkt die Testperson schon öfter das Hauptmenü gesehen hat.
+
+\newpage
+\textbf{Erkenntnisse}
+\par\bigskip
+Aus dem User-Test ist hervorgegangen, dass das Wording neues Spiel/ Weiterspielen für die Zielgruppe schwer verständlich ist, dies mag daran liegen, dass diese an Puzzlespiele gewöhnt sind, bei denen jede Runde als einzelnes (und nicht teil eines ganzen) gesehen wird und deshalb Weiterspielen für die Nutzer keinen Sinn ergibt. Daher müsste die "Neues Spiel" und "Weiterspielen" Option in eine Spielen-Option gepackt werden, welche dann über einen Dialog ermöglicht eine gespeicherte Runde fortzusetzen bzw. beim aktuellsten (das höchste freigespielte Level) eine neue Runde zu starten.
+
+\par\bigskip 
+Hinter der "Neues Spiel" Funktion war die Levelauswahl etwas versteckt. Hier besteht die Möglichkeit, wie in anderen Puzzle/Rätsel-Spielen auf eine "Levels" Option anzuzeigen.
+
+\par\bigskip
+\textbf{Zu Test 4:} Die Testperson hat eine Option für das Neustarten eines Levels im Pause Menü vermisst. Dieser Vorschlag wird auf jeden Fall in das finale Design mit aufgenommen.
+
+\par\bigskip
+
+\textbf{Allgemeine Frage:} Bessere Namen für die Menüpunkte wählen.
+Was ist der Unterschied zwischen Weiterspielen und Spielen für dich?
+
+
+\end{document}

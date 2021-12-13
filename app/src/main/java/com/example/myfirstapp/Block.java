@@ -9,13 +9,13 @@ import android.util.Pair;
 public class Block {
 
     //top left Corner is Origin (x,y)
-    private Pair<Integer, Integer> origin;
-    private Integer width = 20;
-    private Integer height = 10;
-    private Boolean show;
-    private BlockMatrix parent;
+    public Pair<Integer, Integer> origin;
+    public Integer width = 20;
+    public Integer height = 10;
+    public Boolean show;
+    public BlockMatrix parent;
 
-    private Paint paint = new Paint();
+    public Paint paint = new Paint();
 
     // Boolean ersetzen mit type of block/item etc
     public Block(Integer x, Integer y, Integer height, Integer width, Boolean isEmpty, BlockMatrix parent) {
@@ -38,20 +38,39 @@ public class Block {
         if (!show)
             return;
         // R = ball radius
-        int R = 30;
-        // find nearest point of rectangel to circle
+        int R = 10;
+        // find nearest point of rectangle to circle
         int Xn = Math.max(origin.first, Math.min(x, origin.first + width));
         int Yn = Math.max(origin.second, Math.min(y, origin.second + height));
 
         int Dx = Xn - x;
         int Dy = Yn - y;
         if ((Dx * Dx + Dy * Dy) <= R * R) {
-            this.show = false;
-            parent.decrementBlockCount();
+            Boolean hitFromBottom = origin.second+this.height < y ;
+            String hitDirection = "";
+
+            if (x > origin.first && x < origin.first + width)
+                hitDirection = "center";
+            else if(x < origin.first)
+                hitDirection = "left";
+            else if (x > origin.first +  width)
+                hitDirection = "right";
+
+            registerHitWithParent();
+            ballCollision(hitFromBottom, hitDirection);
         }
     }
 
-    private Rect calcRect(Pair<Integer, Integer> origin, Integer w, Integer h) {
+    public void registerHitWithParent() {
+        this.show = false;
+        parent.decrementBlockCount();
+    }
+
+    public void ballCollision(Boolean hitFromBottom, String hitDirection) {
+        parent.registerHitWithBall(hitFromBottom, hitDirection);
+    }
+
+    public Rect calcRect(Pair<Integer, Integer> origin, Integer w, Integer h) {
         return new Rect(origin.first, origin.second, origin.first + width, origin.second + height);
     }
 

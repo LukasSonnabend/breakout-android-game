@@ -27,6 +27,7 @@ public class MainThread extends Thread {
                     this.gameView.draw(canvas);
                 }
             } catch (Exception e) {
+                return;
             } finally {
                 if (canvas != null) {
                     try {

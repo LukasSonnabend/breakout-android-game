@@ -3,8 +3,6 @@ package com.example.myfirstapp;
 import android.graphics.Canvas;
 import android.util.Pair;
 
-import java.lang.reflect.Field;
-
 public class BlockMatrix {
 
     private Integer fieldRows = 7;
@@ -16,9 +14,9 @@ public class BlockMatrix {
 
     private String level = "1111111111" +
             "1111111111" +
-            "1100001111" +
-            "1100011111" +
-            "1110001111" +
+            "0000000000" +
+            "110000LLL0" +
+            "1110000000" +
             "1111000000" +
             "1111110000";
 
@@ -43,8 +41,20 @@ public class BlockMatrix {
             yOrigin = 10 + (blockHeight * (i + 1)) + (blockGap * i + 1);
             //loop set block in rows
             for (int j = 0; j < maxBlocksPerRow; ++j) {
-                field[i][j] = new Block(xOrigin, yOrigin, blockHeight, blockWidth, level.charAt((maxBlocksPerRow * i) + j) == '1' ? false : true, this);
-                if (level.charAt((maxBlocksPerRow * i) + j) == '1')
+                Block blk;
+                switch (level.charAt((maxBlocksPerRow * i) + j)) {
+                    case '1':
+                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, false, this);
+                        break;
+                    case 'L':
+                        blk = new LockedBlock(xOrigin, yOrigin, blockHeight, blockWidth, false, this);
+                        break;
+                    default:
+                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, true, this);
+                }
+
+                field[i][j] = blk;
+                if (level.charAt((maxBlocksPerRow * i) + j) != '0')
                     blockCount++;
                 xOrigin += blockWidth + blockGap;
             }
@@ -70,10 +80,15 @@ public class BlockMatrix {
 
     public void decrementBlockCount() {
         this.blockCount--;
-        this.gameBall.collision();
+
         if (this.blockCount == 0)
             parentActivity.openMenuActivity();
     }
+
+    public void registerHitWithBall(Boolean hitFromBottom, String hitDirection) {
+        this.gameBall.collision(hitFromBottom, hitDirection);
+    }
+
 
     // switch um block type zu setzen
 

@@ -9,8 +9,6 @@ public class Level {
     private Ball ball;
     private BlockMatrix blockField;
     private BallLauncher ballLauncher;
-    private int touchX;
-    private int touchY;
     private String currentTouchEvent;
     private Pair<Integer, Integer> screenSize;
 
@@ -35,7 +33,8 @@ public class Level {
         if (currentTouchEvent != "UP" && currentTouchEvent != null) {
             ball.setXY(touchX, touchY);
         }
-        ballLauncher.hitDetection(touchX, touchY, currentTouchEvent, ball);
+        ballLauncher.hitDetection(ball);
+        ballLauncher.touchDetection(touchX, touchY, currentTouchEvent, ball);
         blockField.setBallPosition(touchX, touchY);
 
     }
