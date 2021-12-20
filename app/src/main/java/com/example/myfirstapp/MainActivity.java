@@ -9,34 +9,39 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     private Button goToGameButton;
-
+    private Integer currentLevel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        SharedPreferences sharedPref = this.getSharedPreferences(
-                getString(R.string.preference_file_key), this.MODE_PRIVATE);
+
+        // TODO: Profil anlegen?
+        // save player name to shared preferences
+        SharedPreferences sharedPref = getSharedPreferences("playerName", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        String newHighScore = "1337";
-        editor.putString(getString(R.string.saved_high_score_key), newHighScore);
-        editor.apply();
-*/
+        editor.putString("playerName", "{currentLevel:1,userName:Werner,highScore:1337}");
+        editor.commit();
 
-        //sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        //String defaultValue = sharedPref.getString(R.string.saved_high_score_key);
-
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        //int defaultValue = getResources().getInteger(R.integer.saved_high_score_default_key);
-        int highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), 0);
 
 
         TextView testTxt = findViewById(R.id.testText);
-        testTxt.setText(highScore.toString);
+        JSONObject obj;
+        try {
+            obj = new JSONObject(sharedPref.getString("playerName", "Player"));
+            testTxt.setText(obj.getString("userName"));
+            currentLevel = obj.getInt("currentLevel");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
         goToGameButton = (Button) findViewById(R.id.goToGameScreenButton);
         goToGameButton.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     // activity wechseln
     public void openGameActivity() {
         Intent intent = new Intent(this, GameScreenActivity.class);
+        intent.putExtra("currentLevel", this.currentLevel);
         startActivity(intent);
     }
 

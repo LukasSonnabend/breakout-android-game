@@ -2,9 +2,13 @@ package com.example.myfirstapp;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -17,13 +21,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private String currentTouchEvent;
     // Level
     private Level currentLevel;
+    private Integer currentLevelNo;
 
-    public GameView(Context context) {
+    public GameView(Context context, Integer currentLevelNo) {
         super(context);
-
+        this.currentLevelNo = currentLevelNo;
         // display Metric test
         parentActivity = (GameScreenActivity) context;
         getHolder().addCallback(this);
+
+
+
 
         // updates Canvas
         thread = new MainThread(getHolder(), this);
@@ -37,7 +45,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        currentLevel = new Level(parentActivity);
+        try {
+
+
+
+            currentLevel = new Level(parentActivity, currentLevelNo);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         thread.setRunning(true);
         thread.start();
     }

@@ -12,17 +12,27 @@ public class BlockMatrix {
     GameScreenActivity parentActivity;
     Ball gameBall;
 
-    private String level = "1111111111" +
+    private String level;
+
+            /*
+            = "1111111111" +
             "1111111111" +
             "0001111000" +
             "110000LLL0" +
+<<<<<<< HEAD
             "LL100000LL" +
             "111100LL00" +
             "1111110111";
+=======
+            "1110000000" +
+            "1111000000" +
+            "1111110000";
+*/
+>>>>>>> 3f030c9 (adds persistent Data/read Level from info.txt)
 
-
-    public BlockMatrix(GameScreenActivity act, Pair<Integer, Integer> screenSize, Ball gameBall) {
+    public BlockMatrix(GameScreenActivity act, Pair<Integer, Integer> screenSize, String levelString, Ball gameBall) {
         parentActivity = act;
+        level = levelString;
         //loop set rows
         Integer xOrigin;
         Integer blockHeight = 40;
@@ -87,6 +97,10 @@ public class BlockMatrix {
 
     public void registerHitWithBall(Boolean hitFromBottom, String hitDirection) {
         this.gameBall.collision(hitFromBottom, hitDirection);
+    }
+
+    public void setLevel(String levelString) {
+        this.level = levelString;
     }
 
 

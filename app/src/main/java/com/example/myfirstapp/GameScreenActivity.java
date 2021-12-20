@@ -24,7 +24,16 @@ public class GameScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_game_screen);
         super.onCreate(savedInstanceState);
-        setContentView(new GameView(this));
+        //get User info
+        Integer level = 0;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            level = extras.getInt("currentLevel");
+            //The key argument here must match that used in the other activity
+        }
+
+
+        setContentView(new GameView(this, level));
     }
 
     public void openMenuActivity() {
