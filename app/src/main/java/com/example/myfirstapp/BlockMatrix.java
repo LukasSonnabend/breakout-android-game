@@ -14,11 +14,11 @@ public class BlockMatrix {
 
     private String level = "1111111111" +
             "1111111111" +
-            "0000000000" +
+            "0001111000" +
             "110000LLL0" +
-            "1110000000" +
-            "1111000000" +
-            "1111110000";
+            "LL100000LL" +
+            "111100LL00" +
+            "1111110111";
 
 
     public BlockMatrix(GameScreenActivity act, Pair<Integer, Integer> screenSize, Ball gameBall) {

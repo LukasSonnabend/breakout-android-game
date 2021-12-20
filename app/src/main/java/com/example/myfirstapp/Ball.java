@@ -9,7 +9,7 @@ public class Ball {
 
     public double x = 0;
     public double y = 0;
-    private Integer radius = 10;
+    private Integer radius = 15;
     public double accelerationX = 0;
     public double accelerationY = 0;
     private Pair<Integer, Integer> screenSize;

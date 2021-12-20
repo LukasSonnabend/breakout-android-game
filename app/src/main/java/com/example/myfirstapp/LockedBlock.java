@@ -2,11 +2,16 @@ package com.example.myfirstapp;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Pair;
 
 import java.util.concurrent.locks.Lock;
 
 public class LockedBlock extends Block{
+
+    private String color = "#33cccc";
+    public Paint paint = new Paint();
+
 
     private boolean locked = true;
     public LockedBlock(Integer x, Integer y, Integer height, Integer width, Boolean isEmpty, BlockMatrix parent) {
@@ -16,7 +21,7 @@ public class LockedBlock extends Block{
 
     public void draw(Canvas canvas) {
         if (show) {
-            paint.setColor(Color.parseColor("#33cccc"));
+            paint.setColor(Color.parseColor(color));
             paint.setTextSize(height-10);
             canvas.drawRect(calcRect(origin, width, height), paint);
             if (locked)
@@ -35,6 +40,7 @@ public class LockedBlock extends Block{
 
     @Override
     public void ballCollision(Boolean hitFromBottom, String hitDirection) {
+        color = "#CD5C5C";
         this.locked = false;
         parent.registerHitWithBall(hitFromBottom, hitDirection);
     }

@@ -147,7 +147,7 @@ public class BallLauncher {
         PointF VectLeftEnd = new PointF(currentTouchX, currentTouchY);
 
         double angleDegrees = bisectorAngleBetween2Lines(VectRightStart, VectRightEnd, VectLeftStart, VectLeftEnd);
-        Integer multiplier = 15;
+        Integer multiplier = 20;
         Double xComponent = Math.cos(Math.PI * angleDegrees / 180) * multiplier;
         if (currentTouchX < origin.first)
             xComponent = Math.abs(xComponent);
