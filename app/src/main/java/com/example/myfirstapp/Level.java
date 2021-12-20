@@ -35,7 +35,7 @@ public class Level {
         // hardcoded level zahl
         List<String> lvls = new ArrayList<String>();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             String levelString = scanner.useDelimiter("\n").next();
             lvls.add(levelString);
         }

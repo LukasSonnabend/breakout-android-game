@@ -25,7 +25,7 @@ public class GameScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_screen);
         super.onCreate(savedInstanceState);
         //get User info
-        Integer level = 0;
+        Integer level = 2;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             level = extras.getInt("currentLevel");

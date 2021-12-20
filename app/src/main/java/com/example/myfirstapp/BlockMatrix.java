@@ -8,32 +8,20 @@ public class BlockMatrix {
     private Integer fieldRows = 7;
     private Integer maxBlocksPerRow = 10;
     private Integer blockCount = 0;
-    private Block[][] field = new Block[fieldRows][maxBlocksPerRow];
+    private Block[][] field;
     GameScreenActivity parentActivity;
     Ball gameBall;
 
     private String level;
 
-            /*
-            = "1111111111" +
-            "1111111111" +
-            "0001111000" +
-            "110000LLL0" +
-<<<<<<< HEAD
-            "LL100000LL" +
-            "111100LL00" +
-            "1111110111";
-=======
-            "1110000000" +
-            "1111000000" +
-            "1111110000";
-*/
->>>>>>> 3f030c9 (adds persistent Data/read Level from info.txt)
 
     public BlockMatrix(GameScreenActivity act, Pair<Integer, Integer> screenSize, String levelString, Ball gameBall) {
         parentActivity = act;
         level = levelString;
         //loop set rows
+        fieldRows = levelString.length() / maxBlocksPerRow;
+        field = new Block[fieldRows][maxBlocksPerRow];
+
         Integer xOrigin;
         Integer blockHeight = 40;
         Integer yOrigin = 10;
@@ -73,7 +61,7 @@ public class BlockMatrix {
 
     public void draw(Canvas canvas) {
         System.out.println("Drawing Matrix");
-        for (int i = 0; i < 7; ++i) {
+        for (int i = 0; i < fieldRows; ++i) {
             for (int j = 0; j < 10; ++j) {
                 field[i][j].draw(canvas);
             }
@@ -81,7 +69,7 @@ public class BlockMatrix {
     }
 
     public void setBallPosition(int x, int y) {
-        for (int i = 0; i < 7; ++i) {
+        for (int i = 0; i < fieldRows; ++i) {
             for (int j = 0; j < 10; ++j) {
                 field[i][j].hitDetection((int) gameBall.x, (int) gameBall.y);
             }

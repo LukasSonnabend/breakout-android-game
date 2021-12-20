@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         // save player name to shared preferences
         SharedPreferences sharedPref = getSharedPreferences("playerName", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("playerName", "{currentLevel:1,userName:Werner,highScore:1337}");
+        editor.putString("playerName", "{currentLevel:2,userName:Werner,highScore:1337}");
         editor.commit();
 
 

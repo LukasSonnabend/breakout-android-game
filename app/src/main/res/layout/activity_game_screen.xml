@@ -13,27 +13,12 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="22dp" />
 
-    <TextView
-        android:id="@+id/y_pos"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="22dp" />
+        app:srcCompat="@drawable/bg"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="105dp" />
 
-    <TextView
-        android:id="@+id/event"
-        android:layout_width="116dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

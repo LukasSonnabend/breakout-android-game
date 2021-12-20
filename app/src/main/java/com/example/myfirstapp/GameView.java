@@ -1,8 +1,15 @@
 package com.example.myfirstapp;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -66,7 +73,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+        // draw bitmap on canvas
         super.draw(canvas);
+        // draw png to canvas
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+
+        DisplayMetrics displayMetrics = parentActivity.getResources().getDisplayMetrics();
+        int displayWidth = displayMetrics.widthPixels;
+        int displayHeight = displayMetrics.heightPixels;
+
+        canvas.drawBitmap(getResizedBitmap(bitmap,displayWidth, displayHeight ), 0,0,null);
+
         if (canvas != null) {
             currentLevel.renderFrame(canvas);
         }
@@ -105,4 +122,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
         return true;
     }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
+    }
+
+
 }
