@@ -46,7 +46,7 @@ public class Block {
         int Dx = Xn - x;
         int Dy = Yn - y;
         if ((Dx * Dx + Dy * Dy) <= R * R) {
-            Boolean hitFromBottom = origin.second+this.height < y ;
+            Boolean hitFromBottom = origin.second+this.height < (y+R) ;
             String hitDirection = "";
 
             if (x > origin.first && x < origin.first + width)

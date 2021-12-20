@@ -31,7 +31,7 @@ public class BlockMatrix {
 
 
         Integer blockWidth = (int) Math.ceil((screenSize.first / 10));
-        Integer blockGap = (int) Math.ceil(blockWidth * 0.2);
+        Integer blockGap = (int) Math.ceil(blockWidth * 0.1);
 
         blockWidth = blockWidth - blockGap;
 
