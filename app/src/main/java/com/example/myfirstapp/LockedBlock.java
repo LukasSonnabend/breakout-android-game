@@ -14,8 +14,9 @@ public class LockedBlock extends Block{
 
 
     private boolean locked = true;
-    public LockedBlock(Integer x, Integer y, Integer height, Integer width, Boolean isEmpty, BlockMatrix parent) {
-        super(x, y, height,width, isEmpty, parent);
+    public LockedBlock(Integer x, Integer y, Integer height, Integer width, Boolean isEmpty, BlockMatrix parent, String color) {
+        super(x, y, height,width, isEmpty, parent, color);
+        this.color = color;
 
     }
 

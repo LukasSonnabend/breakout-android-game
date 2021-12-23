@@ -21,7 +21,7 @@ public class BlockMatrix {
         parentActivity = act;
         this.screenSize = screenSize;
         level = levelString;
-        //loop set rows
+        // loop set rows
         fieldRows = levelString.length() / maxBlocksPerRow;
         field = new Block[fieldRows][maxBlocksPerRow];
         score = 0;
@@ -30,28 +30,27 @@ public class BlockMatrix {
         Integer yOrigin = 10;
         this.gameBall = gameBall;
 
-
         Integer blockWidth = (int) Math.ceil((screenSize.first / 10));
         Integer blockGap = (int) Math.ceil(blockWidth * 0.1);
 
         blockWidth = blockWidth - blockGap;
 
-
         for (int i = 0; i < fieldRows; ++i) {
             xOrigin = 10;
             yOrigin = 10 + (blockHeight * (i + 1)) + (blockGap * i + 1);
-            //loop set block in rows
+            // loop set block in rows
             for (int j = 0; j < maxBlocksPerRow; ++j) {
                 Block blk;
+                String blockColor = calcBlockColor(i, j);
                 switch (level.charAt((maxBlocksPerRow * i) + j)) {
                     case '1':
-                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, false, this);
+                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, false, this, blockColor);
                         break;
                     case 'L':
-                        blk = new LockedBlock(xOrigin, yOrigin, blockHeight, blockWidth, false, this);
+                        blk = new LockedBlock(xOrigin, yOrigin, blockHeight, blockWidth, false, this, blockColor);
                         break;
                     default:
-                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, true, this);
+                        blk = new Block(xOrigin, yOrigin, blockHeight, blockWidth, true, this, blockColor);
                 }
 
                 field[i][j] = blk;
@@ -65,14 +64,14 @@ public class BlockMatrix {
     public void draw(Canvas canvas) {
         System.out.println("Drawing Matrix");
         Paint paint = new Paint();
-        /*paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawPaint(paint);
-*/
+        /*
+         * paint.setColor(Color.WHITE);
+         * paint.setStyle(Paint.Style.FILL);
+         * canvas.drawPaint(paint);
+         */
         paint.setColor(Color.WHITE);
         paint.setTextSize(50);
-        canvas.drawText("Score: " + this.score, screenSize.first-300, 40, paint);
-
+        canvas.drawText("Score: " + this.score, screenSize.first - 300, 40, paint);
 
         for (int i = 0; i < fieldRows; ++i) {
             for (int j = 0; j < 10; ++j) {
@@ -87,6 +86,25 @@ public class BlockMatrix {
                 field[i][j].hitDetection((int) gameBall.x, (int) gameBall.y);
             }
         }
+    }
+
+    // calc color of block
+    public String calcBlockColor(Integer x, Integer y) {
+    // loop through all blocks and set color
+            Integer color = (x*10 + y) % 4;          
+                switch (color) {
+                    case 0:
+                        return "#F07167";
+                    case 1:
+                        return "#FED9B7";
+                    case 2:
+                        return "#54577C";
+                    case 3:
+                        return "#320E3B";
+                    case 4:
+                        return "#A03E99";
+                }
+                return "#FFFFFF";
     }
 
     public void decrementBlockCount() {
@@ -104,9 +122,6 @@ public class BlockMatrix {
         this.level = levelString;
     }
 
-
     // switch um block type zu setzen
 
-
 }
-
