@@ -1,10 +1,12 @@
 package com.example.myfirstapp;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Pair;
 
 public class BlockMatrix {
-
+    private Pair<Integer, Integer> screenSize;
     private Integer fieldRows = 7;
     private Integer maxBlocksPerRow = 10;
     private Integer blockCount = 0;
@@ -13,15 +15,16 @@ public class BlockMatrix {
     Ball gameBall;
 
     private String level;
-
+    private Integer score;
 
     public BlockMatrix(GameScreenActivity act, Pair<Integer, Integer> screenSize, String levelString, Ball gameBall) {
         parentActivity = act;
+        this.screenSize = screenSize;
         level = levelString;
         //loop set rows
         fieldRows = levelString.length() / maxBlocksPerRow;
         field = new Block[fieldRows][maxBlocksPerRow];
-
+        score = 0;
         Integer xOrigin;
         Integer blockHeight = 40;
         Integer yOrigin = 10;
@@ -61,6 +64,16 @@ public class BlockMatrix {
 
     public void draw(Canvas canvas) {
         System.out.println("Drawing Matrix");
+        Paint paint = new Paint();
+        /*paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPaint(paint);
+*/
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(50);
+        canvas.drawText("Score: " + this.score, screenSize.first-300, 40, paint);
+
+
         for (int i = 0; i < fieldRows; ++i) {
             for (int j = 0; j < 10; ++j) {
                 field[i][j].draw(canvas);
@@ -78,7 +91,7 @@ public class BlockMatrix {
 
     public void decrementBlockCount() {
         this.blockCount--;
-
+        this.score += 100;
         if (this.blockCount == 0)
             parentActivity.openMenuActivity();
     }

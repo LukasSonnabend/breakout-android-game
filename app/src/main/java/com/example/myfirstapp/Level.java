@@ -18,12 +18,15 @@ public class Level {
     private BallLauncher ballLauncher;
     private String currentTouchEvent;
     private Pair<Integer, Integer> screenSize;
+    private Integer score;
 
     public Level(GameScreenActivity parentActivity, Integer level) throws IOException {
         DisplayMetrics displayMetrics = parentActivity.getResources().getDisplayMetrics();
         int displayWidth = displayMetrics.widthPixels;
         int displayHeight = displayMetrics.heightPixels;
         screenSize = new Pair<>(displayWidth, displayHeight);
+        score = 0;
+
         // load level String
 
 
@@ -61,6 +64,7 @@ public class Level {
         ballLauncher.hitDetection(ball);
         ballLauncher.touchDetection(touchX, touchY, currentTouchEvent, ball);
         blockField.setBallPosition(touchX, touchY);
+        //TODO: Update score on hit
 
     }
 

@@ -82,7 +82,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         int displayWidth = displayMetrics.widthPixels;
         int displayHeight = displayMetrics.heightPixels;
 
-        canvas.drawBitmap(getResizedBitmap(bitmap,displayWidth, displayHeight ), 0,0,null);
+        //canvas.drawBitmap(getResizedBitmap(bitmap,displayWidth, displayHeight ), 0,0,null);
 
         if (canvas != null) {
             currentLevel.renderFrame(canvas);
